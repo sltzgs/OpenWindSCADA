@@ -1,4 +1,4 @@
-# Wind_Turbine_SCADA_open_data
+# OpenWindSCADA
 
 
 ### Repository of openly available wind turbine SCADA datasets with high-level descriptions, reusable data loaders for convenient CSV import, and a platform for documenting insights related to data quality and malfunctions.
