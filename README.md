@@ -79,6 +79,9 @@ The respective notebooks automatically load, read and display the respective mal
 ## How to contribute:
 We welcome contributions to expand the collection of open datasets in this repository as well as community annotations for the respective datasets.
 
+## Other Resources:
+- [IEA Task 43](https://iea-wind.org/task43/task-43-open-data/)
+
 ## References:
 Many of the above listed datasets are described and analysed in [[1]](#ref1).
 
