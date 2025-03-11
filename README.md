@@ -3,7 +3,7 @@
 
 ### Repository of openly available wind turbine SCADA datasets with high-level descriptions, reusable data loaders for convenient CSV import, and a platform for documenting insights related to data quality and malfunctions.
 
-For questions and feedback, plese reach out to: simon.letzgus@tu-berlin.de
+For questions and feedback, plese reach out to: simon.leszek@tu-berlin.de
 
 ## Table of open source wind turbine SCADA data sets:
 
