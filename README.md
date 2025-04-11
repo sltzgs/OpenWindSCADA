@@ -77,7 +77,7 @@ The respective notebooks automatically load, read and display the respective mal
 ![image](./images/community_annotations_example.png)
 
 ## How to contribute:
-We welcome contributions to expand the collection of open datasets in this repository as well as community annotations for the respective datasets.
+We welcome contributions to expand the collection of open datasets in this repository as well as community annotations for the datasets. Feel free to create respective PRs :).
 
 ## References:
 Many of the above listed datasets are described and analysed in [[1]](#ref1).
