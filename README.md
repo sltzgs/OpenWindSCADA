@@ -1,9 +1,9 @@
-# Wind_Turbine_SCADA_open_data
+# OpenWindSCADA
 
 
 ### Repository of openly available wind turbine SCADA datasets with high-level descriptions, reusable data loaders for convenient CSV import, and a platform for documenting insights related to data quality and malfunctions.
 
-For questions and feedback, plese reach out to: simon.letzgus@tu-berlin.de
+For questions and feedback, plese reach out to: simon.leszek@tu-berlin.de
 
 ## Table of open source wind turbine SCADA data sets:
 
@@ -34,6 +34,7 @@ For questions and feedback, plese reach out to: simon.letzgus@tu-berlin.de
 |17| [Pedra do Sal Wind Farm](https://zenodo.org/records/1475197)                                                   | &cross;                                    | BRZ (on)  |&check;        | 20     | ~40   | &cross;     | &cross;                        | 10m      | 1y |  - | [farm info](https://www.thewindpower.net/windfarm_en_15922_pedra-do-sal.php)| 
 |18| [Beberibe Wind Farm](https://zenodo.org/records/1475197)                                                       | &cross;                                    | BRZ (on)  |&check;        | 32     | ~40   | &cross;     | &cross;                        | 10m      | 1y |  - | [farm info](https://www.thewindpower.net/windfarm_en_7032_beberibe.php)| 
 |19| [SMARTEOLE Wind Farm](https://zenodo.org/records/7342466)                                                      | &cross;                                    | FRA (on)  |&check;        | 7     | ~40   | &check;     | &cross;                        | 1m      | 4m |  [[5]](#ref5) | wake steering; [farm info](https://www.thewindpower.net/windfarm_de_3987_sole-du-moulin-vieux.php)| 
+|20| [Loegtved VestasV100](https://www.kaggle.com/datasets/morteneghj/vestas-v100-pitch-power-windspeed/data)      | &cross;                                    | DK (on)  |&cross;        | 1     | 3   | &cross;     | &cross;                        | 10m      | 4y |  - | [contact for more data](https://www.linkedin.com/in/mortenvanggaard)| 
 |98| [Engie La Haute Borne](https://opendata-renewables.engie.com/)                                                 | &cross;                                    | FR (on)   |&cross;        | 4     |~80    | &cross;     | &cross;                    | 10m     | 8y| -  |  offline; [farm info](https://www.thewindpower.net/windfarm_en_3354_la-haute-borne-vaudeville-le-haut.php) |
 |99| [Levenmouth Turbine](https://pod.ore.catapult.org.uk/data-collection/ldt-turbine-scada-10m)                    | &cross;                                    | UK (near) |&check;        | 1     | >500  | &check;     | &cross;                        | 10m/1s| 3y|  - | not for free (~2000 £) |
 
@@ -78,6 +79,9 @@ The respective notebooks automatically load, read and display the respective mal
 
 ## How to contribute:
 We welcome contributions to expand the collection of open datasets in this repository as well as community annotations for the datasets. Feel free to create respective PRs :).
+
+## Other Resources:
+- [IEA Task 43](https://iea-wind.org/task43/task-43-open-data/)
 
 ## References:
 Many of the above listed datasets are described and analysed in [[1]](#ref1).
