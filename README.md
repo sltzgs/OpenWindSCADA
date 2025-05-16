@@ -39,11 +39,11 @@ For questions and feedback, plese reach out to: simon.leszek@tu-berlin.de
 |:-1:|98| [Engie La Haute Borne](https://opendata-renewables.engie.com/)                                                 | &cross;                                    | FR (on)   |&cross;        | 4     |~80    | &cross;     | &cross;                    | 10m     | 8y| -  |  offline; [farm info](https://www.thewindpower.net/windfarm_en_3354_la-haute-borne-vaudeville-le-haut.php) |
 |:-1:|99| [Levenmouth Turbine](https://pod.ore.catapult.org.uk/data-collection/ldt-turbine-scada-10m)                    | &cross;                                    | UK (near) |&check;        | 1     | >500  | &check;     | &cross;                        | 10m/1s| 3y|  - | not for free (~2000 £) |
 
-&cross; = no / &check; = yes
-:-1: = no longer available
-:star: = comprehensive dataset
-:new::exclamation: = latest addition
-**bold** = best in class
+- &cross; = no / &check; = yes
+- :-1: = no longer available
+- :star: = comprehensive dataset
+- :new::exclamation: = latest addition
+- **bold** = best in class
 
 <div id="fn1"><sup>1</sup> Manual annotations of major failures or component replacements </div>
 <div id="fn2"><sup>2</sup> SCADA error log indicator</div>
