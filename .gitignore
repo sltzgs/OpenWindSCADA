@@ -1,1 +1,4 @@
 .DS_Store
+# Poster exports
+Poster_OpenWindSCADA*.pdf
+Poster_OpenWindSCADA*.svg
