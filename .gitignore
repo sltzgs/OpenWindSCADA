@@ -2,3 +2,7 @@
 # Poster exports
 Poster_OpenWindSCADA*.pdf
 Poster_OpenWindSCADA*.svg
+
+# Local data and Claude Code settings
+edp_data/
+.claude/
