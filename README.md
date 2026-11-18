@@ -111,4 +111,4 @@ Many of the above listed datasets are described and analysed in [[1]](#ref1).
 <div id="ref6">[6]</div>[SDWPF: A Dataset for Spatial Dynamic Wind Power Forecasting over a Large Turbine Array. Scientific Data (2024).](https://www.nature.com/articles/s41597-024-03427-5)
 
 ## Usage
-![Stargazers over time](https://starchart.cc/sltzgs/OpenWindSCADA.svg)
+[![Star History Chart](https://api.star-history.com/svg?repos=sltzgs/OpenWindSCADA&type=Date)](https://star-history.com/#sltzgs/OpenWindSCADA&Date)
