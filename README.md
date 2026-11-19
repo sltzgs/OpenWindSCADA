@@ -1,48 +1,61 @@
 # OpenWindSCADA
 
+**A curated catalogue of openly available wind turbine SCADA datasets** — with a comparable overview of each dataset, ready-to-use data loaders, community-sourced notes on data quality and malfunctions, and a list of the publications that use them.
 
-### Repository of openly available wind turbine SCADA datasets with high-level descriptions, reusable data loaders for convenient CSV import, and a platform for documenting insights related to data quality and malfunctions.
+Finding usable SCADA data is often the first hurdle in wind energy research. This repository collects 33 dataset entries (onshore & offshore, single turbines to 100+ turbine farms, 1 s to 10 min resolution) in one place, so you can quickly see what exists, how to access it and under which license — and learn from what others have already found in the data.
 
-For questions and feedback, please reach out to: simon.leszek@tu-berlin.de
+**Contents**
+1. [Dataset Overview](#datasets) — one table comparing all datasets: location, turbines, variables, logs, labels, resolution, duration, access & license
+2. [Code & Community Annotations](#code)
+   1. [Notebooks: Data Loaders & Overview Plots](#notebooks) — Jupyter notebooks that load the data and plot availability, power curves and wind roses
+   2. [Community Annotations](#annotations) — shared CSV files documenting data-quality issues and malfunctions per dataset
+   3. [How to Contribute](#contribute) — add new datasets or community annotations via pull request
+3. [Literature](#literature)
+   1. [Reviews of Open Wind SCADA Datasets](#reviews) — survey papers covering open wind data
+   2. [Publications Using the Datasets](#publications) — 174 publications, grouped by dataset
+   3. [Other Resources](#resources) — related data portals and open-source analysis tools
 
-## Table of open source wind turbine SCADA data sets:
+Questions or feedback? Reach out to simon.leszek@tu-berlin.de or open an issue.
 
-**Legend:** ✅ yes · ❌ no · ? unknown · ⭐ comprehensive dataset · 🆕 latest addition · ⚠️ caveat, see notes · 👎 no longer freely available · **bold** = best in class · **Ref:** [n] = publication introducing the dataset, 📚n = number of listed publications using the dataset (see [Publications](#publications-using-the-datasets)) · 📓 notebook in this repo · ↗️ external loader · on/off/near = onshore/offshore/nearshore · License – = not stated publicly
+<a id="datasets"></a>
+## 1. Dataset Overview
 
-| ID | Dataset | Loader | Location | Met-mast/<br>LiDAR | Turbines | Vars | Logs | Labels | ΔT | ΣT | Access | License | Ref | Notes |
-|----|---------|:------:|----------|:------------------:|---------:|-----:|:----:|:------:|----|----|--------|---------|-----|-------|
-| 1 | [EDP Open Data](https://www.edp.com/en/innovation/open-data/data) ⚠️ | [📓](notebooks/edp_open_data.ipynb) | 🇪🇸 on | ✅ | 5 | ~80 | ✅ | ✅[^edp] | 10m | 2y | mirror | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) (mirror) | [📚15](#pubs-1) | <details><summary>notes</summary>Original source unavailable; T09 removed from dataset. Re-hosted [mirror](https://data.mendeley.com/datasets/zjxjnjp3xs/1): 8 xlsx files, T01/T06/T07/T11; SCADA ~417k × 83, met-mast ~87.5k × 41, logs ~256k rows; T09 also absent. The mirror is published under CC BY 4.0; the original EDP release was [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) - check licensing of the 3rd-party re-upload.</details> |
+**Legend:** ✅ yes · ❌ no · ? unknown · ⭐ comprehensive dataset · 🆕 latest addition · ⚠️ caveat, see notes · 👎 no longer freely available · **bold** = best in class · **Ref:** [n] = publication introducing the dataset, 📚n = number of listed publications using the dataset (see [Publications](#publications)) · 📓 notebook in this repo · ↗️ external loader · on/off/near = onshore/offshore/nearshore · **License:** CC = Creative Commons v4.0 · – or ? = not stated publicly
+
+| ID | Dataset | Loader | Location | Met-mast/<br>LiDAR | #<img src="images/wind_turbine.svg" height="16" alt="turbines" title="Number of turbines"> | Vars | Logs | Labels | ΔT | ΣT | Access | License | Ref | Notes |
+|----|---------|:------:|----------|:------------------:|---------:|:----:|:----:|:------:|----|:---:|--------|---------|-----|-------|
+| 1 | [EDP Open Data](https://www.edp.com/en/innovation/open-data/data) ⚠️ | [📓](notebooks/edp_open_data.ipynb) | 🇪🇸 on | ✅ | 5 | ~80 | ✅ | ✅[^edp] | 10m | 2y | mirror | [CC BY](https://creativecommons.org/licenses/by/4.0/) | [📚15](#pubs-1) | <details><summary>notes</summary>Original source unavailable; T09 removed from dataset. Re-hosted [mirror](https://data.mendeley.com/datasets/zjxjnjp3xs/1): 8 xlsx files, T01/T06/T07/T11; SCADA ~417k × 83, met-mast ~87.5k × 41, logs ~256k rows; T09 also absent. The mirror is published under CC BY 4.0; the original EDP release was [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) - check licensing of the 3rd-party re-upload.</details> |
 | 2 | [Winji Gearbox Challenge](https://community.wedowind.ch/spaces/17205763/content) | – | ? | ? | 5 | ~20 | ✅ | ✅[^winji] | 10m | 3y | registration | – | [[21]](#ref21) [📚2](#pubs-2) | <details><summary>notes</summary>Requires registration & consent from WinJi.</details> |
-| 3 | [Kelmarsh Farm](https://zenodo.org/records/16807551) ⭐ | [📓](notebooks/kelmarsh_open_data.ipynb) | 🇬🇧 on | ❌ | 6 | ~99 | ✅ | ❌ | 10m[^hires] | 9y | open | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | [📚16](#pubs-3) | <details><summary>notes</summary>6 × Senvion MM92, 2016-2024 (v2025 supersedes the [older record](https://zenodo.org/record/5841834), 5y). Via Greenbyte. [Farm info](https://www.thewindpower.net/windfarm_en_17507_kelmarsh.php). [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) (Cubico).</details> |
-| 4 | [Penmanshiel Farm](https://zenodo.org/records/16807304) ⭐ | – | 🇬🇧 on | ❌ | 14 | >150 | ✅ | ❌ | 10m[^hires] | 9y | open | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | [📚21](#pubs-4) | <details><summary>notes</summary>14 × Senvion MM82, 2016-2024 (v3 supersedes the [older record](https://zenodo.org/record/5946808), 5y); WT03 absent. Via Greenbyte. Includes substation/PMU meter (2023-24) & fiscal/grid meter. [Farm info](https://www.thewindpower.net/windfarm_en_23147_penmanshiel.php). [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) (Cubico).</details> |
-| 5 | [Ørsted Anholt Offshore](https://orsted.com/en/our-business/offshore-wind/offshore-operational-data) | – | 🇩🇰 off | (✅)[^buoy] | 111 | ? | ? | ? | 10m | 2y | NDA | – | [📚10](#pubs-5) | <details><summary>notes</summary>Application/NDA required. [Farm info](https://www.thewindpower.net/windfarm_en_10687_anholt.php).</details> |
-| 6 | [Ørsted Westermost Rough](https://orsted.com/en/our-business/offshore-wind/offshore-operational-data) | – | 🇬🇧 off | (✅)[^buoy] | 35 | ? | ? | ? | 10m | 2y | NDA | – | [📚7](#pubs-6) | <details><summary>notes</summary>Application/NDA required. [Farm info](https://www.thewindpower.net/windfarm_en_21826_westermost-rough.php).</details> |
-| 7a | ["CAREtoCompare" Windfarm B](https://data.niaid.nih.gov/resources?id=zenodo_10958774) ⚠️ | – | 🇩🇪 off | ? | 9 | 64 | ? | ✅ | 10m | 2y | open | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) | [[67]](#ref67) [📚13](#pubs-7a-7b) | <details><summary>notes</summary>Normalized for anonymization; v6 (07/2025) corrected labels. ⚠️ Use Avg signals only - Min/Max/Std are unreliable (see Zenodo data-quality note).</details> |
-| 7b | ["CAREtoCompare" Windfarm C](https://data.niaid.nih.gov/resources?id=zenodo_10958774) | – | 🇩🇪 off | ? | 22 | 238 | ? | ✅ | 10m | 2y | open | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) | [[67]](#ref67) [📚13](#pubs-7a-7b) | <details><summary>notes</summary>Normalized for anonymization; v6 (07/2025) corrected labels.</details> |
-| 8 | [Fuhrländer Farm](https://github.com/alecuba16/fuhrlander) | – | ? on | ❌ | 5 | 312 | ✅ | ❌ | 5m | 3y | open | EPL-2.0 | [[80]](#ref80) [📚4](#pubs-8) | <details><summary>notes</summary>Eclipse Public License v2.0.</details> |
-| 9a | [DSforWind Windfarm 1a](https://zenodo.org/records/5516552) | – | ? on | ✅[^lidar] | 4 | 7 | ❌ | ❌ | 10m | 1y | open | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | [[84]](#ref84) [📚7](#pubs-9a-9d) | – |
-| 9b | [DSforWind Windfarm 1b](https://zenodo.org/records/5516552) | – | ? off | ✅[^lidar] | 2 | 7 | ❌ | ❌ | 10m | 1y | open | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | [[84]](#ref84) [📚7](#pubs-9a-9d) | – |
-| 9c | [DSforWind Windfarm 2a](https://zenodo.org/records/5516554) | – | ? on | ✅[^lidar] | 2 | 7 | ❌ | ❌ | 10m | 1y | open | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | [[84]](#ref84) [📚7](#pubs-9a-9d) | – |
-| 9d | [DSforWind Windfarm 2b](https://zenodo.org/records/5516554) | – | ? off | ✅[^lidar] | 2 | 7 | ❌ | ❌ | 10m | 1y | open | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | [[84]](#ref84) [📚7](#pubs-9a-9d) | – |
+| 3 | [Kelmarsh Farm](https://zenodo.org/records/16807551) ⭐ | [📓](notebooks/kelmarsh_open_data.ipynb) | [🇬🇧 on](https://www.google.com/maps?q=52.401611,-0.942944) | ❌ | 6 | ~99 | ✅ | ❌ | 10m[^hires] | 9y | open | [CC BY](https://creativecommons.org/licenses/by/4.0/) | [📚16](#pubs-3) | <details><summary>notes</summary>6 × Senvion MM92, 2016-2024 (v2025 supersedes the [older record](https://zenodo.org/record/5841834), 5y). Via Greenbyte. [Farm info](https://www.thewindpower.net/windfarm_en_17507_kelmarsh.php). [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) (Cubico).</details> |
+| 4 | [Penmanshiel Farm](https://zenodo.org/records/16807304) ⭐ | – | [🇬🇧 on](https://www.google.com/maps?q=55.871333,-2.3545) | ❌ | 14 | >150 | ✅ | ❌ | 10m[^hires] | 9y | open | [CC BY](https://creativecommons.org/licenses/by/4.0/) | [📚21](#pubs-4) | <details><summary>notes</summary>14 × Senvion MM82, 2016-2024 (v3 supersedes the [older record](https://zenodo.org/record/5946808), 5y); WT03 absent. Via Greenbyte. Includes substation/PMU meter (2023-24) & fiscal/grid meter. [Farm info](https://www.thewindpower.net/windfarm_en_23147_penmanshiel.php). [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) (Cubico).</details> |
+| 5 | [Ørsted Anholt Offshore](https://orsted.com/en/our-business/offshore-wind/offshore-operational-data) | – | [🇩🇰 off](https://www.google.com/maps?q=56.6,11.21) | (✅)[^buoy] | 111 | ? | ? | ? | 10m | 2y | NDA | – | [📚10](#pubs-5) | <details><summary>notes</summary>Application/NDA required. [Farm info](https://www.thewindpower.net/windfarm_en_10687_anholt.php).</details> |
+| 6 | [Ørsted Westermost Rough](https://orsted.com/en/our-business/offshore-wind/offshore-operational-data) | – | [🇬🇧 off](https://www.google.com/maps?q=53.804972,0.148972) | (✅)[^buoy] | 35 | ? | ? | ? | 10m | 2y | NDA | – | [📚7](#pubs-6) | <details><summary>notes</summary>Application/NDA required. [Farm info](https://www.thewindpower.net/windfarm_en_21826_westermost-rough.php).</details> |
+| 7a | ["CAREtoCompare" Windfarm B](https://data.niaid.nih.gov/resources?id=zenodo_10958774) ⚠️ | – | 🇩🇪 off | ? | 9 | 64 | ? | ✅ | 10m | 2y | open | [CC BY‑SA](https://creativecommons.org/licenses/by-sa/4.0/) | [[67]](#ref67) [📚13](#pubs-7a-7b) | <details><summary>notes</summary>Normalized for anonymization; v6 (07/2025) corrected labels. ⚠️ Use Avg signals only - Min/Max/Std are unreliable (see Zenodo data-quality note).</details> |
+| 7b | ["CAREtoCompare" Windfarm C](https://data.niaid.nih.gov/resources?id=zenodo_10958774) | – | 🇩🇪 off | ? | 22 | 238 | ? | ✅ | 10m | 2y | open | [CC BY‑SA](https://creativecommons.org/licenses/by-sa/4.0/) | [[67]](#ref67) [📚13](#pubs-7a-7b) | <details><summary>notes</summary>Normalized for anonymization; v6 (07/2025) corrected labels.</details> |
+| 8 | [Fuhrländer Farm](https://github.com/alecuba16/fuhrlander) | – | ? on | ❌ | 5 | 312 | ✅ | ❌ | 5m | 3y | open | EPL‑2.0 | [[80]](#ref80) [📚4](#pubs-8) | <details><summary>notes</summary>Eclipse Public License v2.0.</details> |
+| 9a | [DSforWind Windfarm 1a](https://zenodo.org/records/5516552) | – | ? on | ✅[^lidar] | 4 | 7 | ❌ | ❌ | 10m | 1y | open | [CC BY](https://creativecommons.org/licenses/by/4.0/) | [[84]](#ref84) [📚7](#pubs-9a-9d) | – |
+| 9b | [DSforWind Windfarm 1b](https://zenodo.org/records/5516552) | – | ? off | ✅[^lidar] | 2 | 7 | ❌ | ❌ | 10m | 1y | open | [CC BY](https://creativecommons.org/licenses/by/4.0/) | [[84]](#ref84) [📚7](#pubs-9a-9d) | – |
+| 9c | [DSforWind Windfarm 2a](https://zenodo.org/records/5516554) | – | ? on | ✅[^lidar] | 2 | 7 | ❌ | ❌ | 10m | 1y | open | [CC BY](https://creativecommons.org/licenses/by/4.0/) | [[84]](#ref84) [📚7](#pubs-9a-9d) | – |
+| 9d | [DSforWind Windfarm 2b](https://zenodo.org/records/5516554) | – | ? off | ✅[^lidar] | 2 | 7 | ❌ | ❌ | 10m | 1y | open | [CC BY](https://creativecommons.org/licenses/by/4.0/) | [[84]](#ref84) [📚7](#pubs-9a-9d) | – |
 | 10 | [PCWG Data Sets](https://pcwg.org/) | – | ? on | ✅ | 3 | 1 | ❌ | ❌ | 10m | 1y | open | – | [📚1](#pubs-10) | – |
-| 11a | [Norrekaer Windfarm](https://data.dtu.dk/articles/dataset/SCADA_data_from_Norre_m2_wind_farm/19076756) | – | 🇩🇰 on | ✅ | 41 | 3 | ❌ | ❌ | 10m | 1.5y | open | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | [📚2](#pubs-11a) | <details><summary>notes</summary>[Dataset DOI](https://doi.org/10.11583/DTU.19076756.v1). [Farm info](https://gitlab.windenergy.dtu.dk/fair-data/winddata-revamp/winddata-documentation/-/blob/master/norre_m2.md).</details> |
-| 11b | [Delabole Windfarm](https://data.dtu.dk/articles/dataset/Scada_data_from_Delabole_wind_farm/14077004) | – | 🇬🇧 on | ✅ | 10 | 1 | ❌ | ❌ | 10m | 1y | open | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | - | <details><summary>notes</summary>[Dataset DOI](https://doi.org/10.11583/DTU.14077004). [Farm info](https://gitlab.windenergy.dtu.dk/fair-data/winddata-revamp/winddata-documentation/-/blob/master/delabole.md).</details> |
-| 12 | [Dundalk IoT](https://data.mendeley.com/datasets/tm988rs48k/2) | – | 🇮🇪 on | ❌ | 1 | 20 | ❌ | ✅[^dundalk] | 10m | **14y** | open | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | [[94]](#ref94) [📚11](#pubs-12) | <details><summary>notes</summary>Urban terrain.</details> |
-| 13 | [Kaggle Wind Turbine](https://www.kaggle.com/berkerisen/wind-turbine-scada-dataset) | – | 🇹🇷 on | ❌ | 1 | 4 | ❌ | ❌ | 10m | 1y | open | not stated (Kaggle: Unknown) | [📚8](#pubs-13) | – |
-| 14 | [Small São Paulo](https://zenodo.org/records/7348454) | – | 🇧🇷 on | ❌ | 1 | ~40 | ❌ | ❌ | 1m | 5y | open | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | [[113]](#ref113) [📚3](#pubs-14) | <details><summary>notes</summary>Small, urban turbine.</details> |
-| 15 | [Björkö Wind Turbine](https://zenodo.org/records/8213270) | – | 🇸🇪 on | ❌ | 1 | 68 | ❌ | ❌ | **1s** | 1y | open | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | [📚1](#pubs-15) | <details><summary>notes</summary>Small turbine. [Turbine info](https://www.chalmers.se/en/departments/e2/resources-and-collaboration/chalmers-wind-turbine/).</details> |
-| 16 | [IET-OST Turbine](https://zenodo.org/records/8192149) | – | 🇨🇭 on | ❌ | 1 | 15 | ❌ | ❌ | **1s** | 1.5y | open | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | [📚4](#pubs-16) | <details><summary>notes</summary>Small turbine. [Turbine info](https://www.ost.ch/en/research-and-consulting-services/technology/renewable-energies-and-environmental-engineering/iet-institute-for-energy-technology/wind-energy/infrastructure).</details> |
-| 17 | [Pedra do Sal Wind Farm](https://zenodo.org/records/1475197) | – | 🇧🇷 on | ✅ | 20 | ~40 | ❌ | ❌ | 10m | 1y | open | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) | [[121]](#ref121) [📚5](#pubs-17-18) | <details><summary>notes</summary>[Farm info](https://www.thewindpower.net/windfarm_en_15922_pedra-do-sal.php).</details> |
-| 18 | [Beberibe Wind Farm](https://zenodo.org/records/1475197) | – | 🇧🇷 on | ✅ | 32 | ~40 | ❌ | ❌ | 10m | 1y | open | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) | [[121]](#ref121) [📚5](#pubs-17-18) | <details><summary>notes</summary>[Farm info](https://www.thewindpower.net/windfarm_en_7032_beberibe.php).</details> |
-| 19 | [SMARTEOLE Wind Farm](https://zenodo.org/records/7342466) | – | 🇫🇷 on | ✅ | 7 | ~40 | ✅ | ❌ | 1m | 4m | open | [Etalab 2.0](https://www.etalab.gouv.fr/licence-ouverte-open-licence/) | [[125]](#ref125) [📚5](#pubs-19) | <details><summary>notes</summary>Wake steering experiment. [Farm info](https://www.thewindpower.net/windfarm_de_3987_sole-du-moulin-vieux.php).</details> |
-| 20 | [Loegtved Vestas V100](https://www.kaggle.com/datasets/morteneghj/vestas-v100-pitch-power-windspeed/data) | – | 🇩🇰 on | ❌ | 1 | 3 | ❌ | ❌ | 10m | 4y | open | Apache 2.0 (as set on Kaggle) | - | <details><summary>notes</summary>[Contact for more data](https://www.linkedin.com/in/mortenvanggaard).</details> |
-| 21 | [Hill of Towie Wind Farm](https://doi.org/10.5281/zenodo.14870021) ⭐ | [↗️](https://github.com/resgroup/hill-of-towie-open-source-analysis) | [🇬🇧 on](https://maps.app.goo.gl/e8H1enJBV1pAQqCi8) | ✅[^lidar] | 21 | **700** | ✅ | ❌ | 10m/1s | 10.3y | open | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | [📚5](#pubs-21) | <details><summary>notes</summary>21 × Siemens SWT-2.3-VS-82, 01/2016-04/2026 (v2.1.0 supersedes the [v1 record](https://zenodo.org/records/14870023), 8.7y). Located in Scotland. Includes ~1Hz turbine & Dynamic Yaw controller fastlog data and 10m/high-res ground LiDAR data for 01-04/2026. 700 10m columns in 2026 = 658 turbine + 42 grid-meter (excl. timestamp/ID). Alarm logs & 10m shutdown durations; AeroUp/TuneUp upgrade and Dynamic Yaw (wake steering) campaign info included. Data loader [here](https://github.com/resgroup/hill-of-towie-open-source-analysis). CC-BY-4.0.</details> |
-| 22 | [Baltic Coast Siemens 2MW Drivetrain](https://data.mendeley.com/datasets/3sys4562ny/2) | – | 🇵🇱 on | ❌ | 1 | 12 | ❌ | ✅[^bearing] | 10m | 30d | open | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | [[135]](#ref135) [📚5](#pubs-22) | <details><summary>notes</summary>Drivetrain focus (gearbox/generator temperatures). [DOI](https://doi.org/10.17632/3sys4562ny.2). CC BY 4.0.</details> |
-| 23 | [SDWPF (Baidu KDD Cup 2022)](https://figshare.com/articles/dataset/SDWPF_dataset/24798654) 🆕 | – | 🇨🇳 ? | ❌ | **134** | 10 | ❌ | ❌ | 10m | 2y | open | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | [[140]](#ref140) [📚10](#pubs-23) | <details><summary>notes</summary>Longyuan Power; turbine coordinates & elevation included. `sdwpf_full` = 24 months + ERA5 (humidity, wind speed/dir), >11.4M entries; KDD Cup version = 245d subset. [HF mirror](https://huggingface.co/datasets/AI4Climate/WindFarm_raw). CC BY 4.0.</details> |
-| 24 | [Sotavento Experimental Wind Farm](https://www.sotaventogalicia.com/en/technical-area/real-time-data/historical/) 🆕 | – | 🇪🇸 on | ✅ | 24 | 3 | ❌ | ❌ | 10m | ? | open | non-profit + citation | [📚7](#pubs-24) | <details><summary>notes</summary>9 turbine models from 5 OEMs (Gamesa, Made, Ecotecnia, NegMicon, Bonus), 17.56 MW, operating since 2001. Per turbine only power, wind speed & cumulative energy. Free use for non-profit purposes + citation of "SOTAVENTO GALICIA, S.A."; more variables on request (datos@sotaventogalicia.com) at a cost.</details> |
-| 25a | [NREL Flatirons GE 1.5MW SLE](https://data.openei.org/submissions/4143) 🆕 ⚠️ | – | 🇺🇸 on | ✅ | 1 | ? | ❌ | ❌ | ? | ? | open | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | [[156]](#ref156) [📚1](#pubs-25a) | <details><summary>notes</summary>⚠️ Research turbine, not fleet-representative. Met mast directly upstream; filtered to wind from 285° ± 15° (noise study). Includes noise spectra & sound pressure at 11 stations. [DOI](https://doi.org/10.21947/1775531). CC BY 4.0.</details> |
-| 25b | [NREL SUMR-D / CART2](https://data.openei.org/submissions/4189) 🆕 ⚠️ | – | 🇺🇸 on | ✅ | 1 | ? | ❌ | ❌ | 5m | ? | open | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | [📚7](#pubs-25b) | <details><summary>notes</summary>⚠️ Research turbine with highly flexible rotor (ARPA-E SUMR-D project). Power, loads & met during startup/operation/shutdown/parked/idle. .mat & .xlsx with MATLAB loader scripts. CC BY 4.0.</details> |
-| 98 | [Engie La Haute Borne](https://opendata-renewables.engie.com/) ⚠️ | – | 🇫🇷 on | ❌ | 4 | 34[^engie] | ❌ | ❌ | 10m | 8y | mirror | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | [📚7](#pubs-98) | <details><summary>notes</summary>Original portal offline. Re-hosted [mirror](https://data.mendeley.com/datasets/vmyg4yp3s8/1): 4 × Senvion MM82, 2013-01-01 - 2020-12-31, 1,057,868 records, CC BY 4.0. Its title misspells the farm as "La Houte Bourne" and locates it in Villeneuve-d'Ascq - the farm is at Vaudeville-le-Haut, Meuse. Check licensing of the 3rd-party re-upload. [Farm info](https://www.thewindpower.net/windfarm_en_3354_la-haute-borne-vaudeville-le-haut.php).</details> |
+| 11a | [Norrekaer Windfarm](https://data.dtu.dk/articles/dataset/SCADA_data_from_Norre_m2_wind_farm/19076756) | – | [🇩🇰 on](https://www.google.com/maps?q=57.001731,9.409744) | ✅ | 41 | 3 | ❌ | ❌ | 10m | 1.5y | open | [CC BY](https://creativecommons.org/licenses/by/4.0/) | [📚2](#pubs-11a) | <details><summary>notes</summary>[Dataset DOI](https://doi.org/10.11583/DTU.19076756.v1). [Farm info](https://gitlab.windenergy.dtu.dk/fair-data/winddata-revamp/winddata-documentation/-/blob/master/norre_m2.md).</details> |
+| 11b | [Delabole Windfarm](https://data.dtu.dk/articles/dataset/Scada_data_from_Delabole_wind_farm/14077004) | – | [🇬🇧 on](https://www.google.com/maps?q=50.630492,-4.708475) | ✅ | 10 | 1 | ❌ | ❌ | 10m | 1y | open | [CC BY](https://creativecommons.org/licenses/by/4.0/) | - | <details><summary>notes</summary>[Dataset DOI](https://doi.org/10.11583/DTU.14077004). [Farm info](https://gitlab.windenergy.dtu.dk/fair-data/winddata-revamp/winddata-documentation/-/blob/master/delabole.md).</details> |
+| 12 | [Dundalk IoT](https://data.mendeley.com/datasets/tm988rs48k/2) | – | 🇮🇪 on | ❌ | 1 | 20 | ❌ | ✅[^dundalk] | 10m | **14y** | open | [CC BY](https://creativecommons.org/licenses/by/4.0/) | [[94]](#ref94) [📚11](#pubs-12) | <details><summary>notes</summary>Urban terrain.</details> |
+| 13 | [Kaggle Wind Turbine](https://www.kaggle.com/berkerisen/wind-turbine-scada-dataset) | – | 🇹🇷 on | ❌ | 1 | 4 | ❌ | ❌ | 10m | 1y | open | ? | [📚8](#pubs-13) | <details><summary>notes</summary>License not stated (Kaggle lists "Unknown").</details> |
+| 14 | [Small São Paulo](https://zenodo.org/records/7348454) | – | 🇧🇷 on | ❌ | 1 | ~40 | ❌ | ❌ | 1m | 5y | open | [CC BY](https://creativecommons.org/licenses/by/4.0/) | [[113]](#ref113) [📚3](#pubs-14) | <details><summary>notes</summary>Small, urban turbine.</details> |
+| 15 | [Björkö Wind Turbine](https://zenodo.org/records/8213270) | – | 🇸🇪 on | ❌ | 1 | 68 | ❌ | ❌ | **1s** | 1y | open | [CC BY](https://creativecommons.org/licenses/by/4.0/) | [📚1](#pubs-15) | <details><summary>notes</summary>Small turbine. [Turbine info](https://www.chalmers.se/en/departments/e2/resources-and-collaboration/chalmers-wind-turbine/).</details> |
+| 16 | [IET-OST Turbine](https://zenodo.org/records/8192149) | – | 🇨🇭 on | ❌ | 1 | 15 | ❌ | ❌ | **1s** | 1.5y | open | [CC BY](https://creativecommons.org/licenses/by/4.0/) | [📚4](#pubs-16) | <details><summary>notes</summary>Small turbine. [Turbine info](https://www.ost.ch/en/research-and-consulting-services/technology/renewable-energies-and-environmental-engineering/iet-institute-for-energy-technology/wind-energy/infrastructure).</details> |
+| 17 | [Pedra do Sal Wind Farm](https://zenodo.org/records/1475197) | – | [🇧🇷 on](https://www.google.com/maps?q=-2.826472,-41.712944) | ✅ | 20 | ~40 | ❌ | ❌ | 10m | 1y | open | [CC BY‑SA](https://creativecommons.org/licenses/by-sa/4.0/) | [[121]](#ref121) [📚5](#pubs-17-18) | <details><summary>notes</summary>[Farm info](https://www.thewindpower.net/windfarm_en_15922_pedra-do-sal.php).</details> |
+| 18 | [Beberibe Wind Farm](https://zenodo.org/records/1475197) | – | [🇧🇷 on](https://www.google.com/maps?q=-4.194417,-38.078806) | ✅ | 32 | ~40 | ❌ | ❌ | 10m | 1y | open | [CC BY‑SA](https://creativecommons.org/licenses/by-sa/4.0/) | [[121]](#ref121) [📚5](#pubs-17-18) | <details><summary>notes</summary>[Farm info](https://www.thewindpower.net/windfarm_en_7032_beberibe.php).</details> |
+| 19 | [SMARTEOLE Wind Farm](https://zenodo.org/records/7342466) | – | [🇫🇷 on](https://www.google.com/maps?q=49.8435,2.801556) | ✅ | 7 | ~40 | ✅ | ❌ | 1m | 4m | open | [Etalab‑2.0](https://www.etalab.gouv.fr/licence-ouverte-open-licence/) | [[125]](#ref125) [📚5](#pubs-19) | <details><summary>notes</summary>Wake steering experiment. [Farm info](https://www.thewindpower.net/windfarm_de_3987_sole-du-moulin-vieux.php).</details> |
+| 20 | [Loegtved Vestas V100](https://www.kaggle.com/datasets/morteneghj/vestas-v100-pitch-power-windspeed/data) | – | 🇩🇰 on | ❌ | 1 | 3 | ❌ | ❌ | 10m | 4y | open | Apache‑2.0 | - | <details><summary>notes</summary>[Contact for more data](https://www.linkedin.com/in/mortenvanggaard).<br>Apache 2.0 as set by the uploader on Kaggle.</details> |
+| 21 | [Hill of Towie Wind Farm](https://doi.org/10.5281/zenodo.14870021) ⭐ | [↗️](https://github.com/resgroup/hill-of-towie-open-source-analysis) | [🇬🇧 on](https://maps.app.goo.gl/e8H1enJBV1pAQqCi8) | ✅[^lidar] | 21 | **700** | ✅ | ❌ | 10m/1s | 10.3y | open | [CC BY](https://creativecommons.org/licenses/by/4.0/) | [📚5](#pubs-21) | <details><summary>notes</summary>21 × Siemens SWT-2.3-VS-82, 01/2016-04/2026 (v2.1.0 supersedes the [v1 record](https://zenodo.org/records/14870023), 8.7y). Located in Scotland. Includes ~1Hz turbine & Dynamic Yaw controller fastlog data and 10m/high-res ground LiDAR data for 01-04/2026. 700 10m columns in 2026 = 658 turbine + 42 grid-meter (excl. timestamp/ID). Alarm logs & 10m shutdown durations; AeroUp/TuneUp upgrade and Dynamic Yaw (wake steering) campaign info included. Data loader [here](https://github.com/resgroup/hill-of-towie-open-source-analysis). CC-BY-4.0.</details> |
+| 22 | [Baltic Coast Siemens 2MW Drivetrain](https://data.mendeley.com/datasets/3sys4562ny/2) | – | 🇵🇱 on | ❌ | 1 | 12 | ❌ | ✅[^bearing] | 10m | 30d | open | [CC BY](https://creativecommons.org/licenses/by/4.0/) | [[135]](#ref135) [📚5](#pubs-22) | <details><summary>notes</summary>Drivetrain focus (gearbox/generator temperatures). [DOI](https://doi.org/10.17632/3sys4562ny.2). CC BY 4.0.</details> |
+| 23 | [SDWPF (Baidu KDD Cup 2022)](https://figshare.com/articles/dataset/SDWPF_dataset/24798654) 🆕 | – | 🇨🇳 ? | ❌ | **134** | 10 | ❌ | ❌ | 10m | 2y | open | [CC BY](https://creativecommons.org/licenses/by/4.0/) | [[140]](#ref140) [📚10](#pubs-23) | <details><summary>notes</summary>Longyuan Power; turbine coordinates & elevation included. `sdwpf_full` = 24 months + ERA5 (humidity, wind speed/dir), >11.4M entries; KDD Cup version = 245d subset. [HF mirror](https://huggingface.co/datasets/AI4Climate/WindFarm_raw). CC BY 4.0.</details> |
+| 24 | [Sotavento Experimental Wind Farm](https://www.sotaventogalicia.com/en/technical-area/real-time-data/historical/) 🆕 | – | 🇪🇸 on | ✅ | 24 | 3 | ❌ | ❌ | 10m | ? | open | non‑profit | [📚7](#pubs-24) | <details><summary>notes</summary>9 turbine models from 5 OEMs (Gamesa, Made, Ecotecnia, NegMicon, Bonus), 17.56 MW, operating since 2001. Per turbine only power, wind speed & cumulative energy. Free use for non-profit purposes + citation of "SOTAVENTO GALICIA, S.A."; more variables on request (datos@sotaventogalicia.com) at a cost.</details> |
+| 25a | [NREL Flatirons GE 1.5MW SLE](https://data.openei.org/submissions/4143) 🆕 ⚠️ | – | 🇺🇸 on | ✅ | 1 | ? | ❌ | ❌ | ? | ? | open | [CC BY](https://creativecommons.org/licenses/by/4.0/) | [[156]](#ref156) [📚1](#pubs-25a) | <details><summary>notes</summary>⚠️ Research turbine, not fleet-representative. Met mast directly upstream; filtered to wind from 285° ± 15° (noise study). Includes noise spectra & sound pressure at 11 stations. [DOI](https://doi.org/10.21947/1775531). CC BY 4.0.</details> |
+| 25b | [NREL SUMR-D / CART2](https://data.openei.org/submissions/4189) 🆕 ⚠️ | – | 🇺🇸 on | ✅ | 1 | ? | ❌ | ❌ | 5m | ? | open | [CC BY](https://creativecommons.org/licenses/by/4.0/) | [📚7](#pubs-25b) | <details><summary>notes</summary>⚠️ Research turbine with highly flexible rotor (ARPA-E SUMR-D project). Power, loads & met during startup/operation/shutdown/parked/idle. .mat & .xlsx with MATLAB loader scripts. CC BY 4.0.</details> |
+| 98 | [Engie La Haute Borne](https://opendata-renewables.engie.com/) ⚠️ | – | [🇫🇷 on](https://www.google.com/maps?q=48.449583,5.586111) | ❌ | 4 | 34[^engie] | ❌ | ❌ | 10m | 8y | mirror | [CC BY](https://creativecommons.org/licenses/by/4.0/) | [📚7](#pubs-98) | <details><summary>notes</summary>Original portal offline. Re-hosted [mirror](https://data.mendeley.com/datasets/vmyg4yp3s8/1): 4 × Senvion MM82, 2013-01-01 - 2020-12-31, 1,057,868 records, CC BY 4.0. Its title misspells the farm as "La Houte Bourne" and locates it in Villeneuve-d'Ascq - the farm is at Vaudeville-le-Haut, Meuse. Check licensing of the 3rd-party re-upload. [Farm info](https://www.thewindpower.net/windfarm_en_3354_la-haute-borne-vaudeville-le-haut.php).</details> |
 | 99 | [Levenmouth Turbine](https://pod.ore.catapult.org.uk/data-collection/ldt-turbine-scada-10m) 👎 | – | 🇬🇧 near | ✅ | 1 | >500 | ✅ | ❌ | 10m/1s | 3y | paid | – | [📚10](#pubs-99) | <details><summary>notes</summary>Not available for free (~2000 £).</details> |
 
 [^edp]: Manual annotations of major failures or component replacements.
@@ -54,7 +67,11 @@ For questions and feedback, please reach out to: simon.leszek@tu-berlin.de
 [^bearing]: Single annotated gearbox bearing failure on 2012-11-09 13:00 (sample 1232).
 [^engie]: 34 process parameters, each with avg/std/max/min per interval (~136 columns).
 
-## Notebooks - Data Loaders and Overview Plots:
+<a id="code"></a>
+## 2. Code & Community Annotations
+
+<a id="notebooks"></a>
+### 2.1 Notebooks: Data Loaders & Overview Plots
 The jupyter notebooks in the 'notebooks' folder contain a data loader for SCADA signals, logs, annotations as well as community annotations (see next sections). The Loader column in the table above indicates whether the respective dataset has already been added. Furthermore, they produce an overview over each dataset such as shown in the following image:
 
 ![image](./images/data_overview_example.png)
@@ -69,7 +86,8 @@ Lastly, operator annotations are listed, if they are part of the dataset. See e.
 
 To run the notebooks yourself, please add the respective .csv-files to the data folder.
 
-## Community Annotations:
+<a id="annotations"></a>
+### 2.2 Community Annotations
 We want to enable researchers to build upon the findings of others who were previously working with the dataset. For every dataset, we have set up a [community-annotation folder](./communiy_annotations), containing simple CSV's to collect data quality or malfunction related observations. They contain the following columns:
 
 - annot_id: unique annotation identifier (running ascending number) 
@@ -83,11 +101,16 @@ The respective notebooks automatically load, read and display the respective mal
 
 ![image](./images/community_annotations_example.png)
 
-## How to contribute:
+<a id="contribute"></a>
+### 2.3 How to Contribute
 We welcome contributions to expand the collection of open datasets in this repository as well as community annotations for the datasets. Feel free to create respective PRs :).
 
-## Reviews on Open Wind SCADA Data Sets:
-Review and survey papers that collect, categorize or discuss openly available wind turbine SCADA datasets. Many of the datasets in Table 1 are described and analysed in [[3]](#ref3).
+<a id="literature"></a>
+## 3. Literature
+
+<a id="reviews"></a>
+### 3.1 Reviews of Open Wind SCADA Datasets
+Review and survey papers that collect, categorize or discuss openly available wind turbine SCADA datasets. Many of the datasets in the [dataset overview](#datasets) are described and analysed in [[3]](#ref3).
 
 - <a id="ref1"></a>[1] Menezes et al. (2020). Wind Farm and Resource Datasets: A Comprehensive Survey and Overview. *Energies*. [doi:10.3390/en13184702](https://doi.org/10.3390/en13184702)
 - <a id="ref2"></a>[2] Chatterjee & Dethlefs (2021). Scientometric review of artificial intelligence for operations & maintenance of wind turbines: The past, present and future. *Renewable and Sustainable Energy Reviews*. [doi:10.1016/j.rser.2021.111051](https://doi.org/10.1016/j.rser.2021.111051)
@@ -96,10 +119,12 @@ Review and survey papers that collect, categorize or discuss openly available wi
 - <a id="ref5"></a>[5] Akhtar et al. (2026). Datasets for wind energy forecasting applications: A comprehensive review and benchmarking perspective. *Renewable and Sustainable Energy Reviews*. [doi:10.1016/j.rser.2026.116941](https://doi.org/10.1016/j.rser.2026.116941)
 - <a id="ref6"></a>[6] Jia et al. (2026). AI-Driven Fault Detection and O&M for Wind Turbine Drivetrains: A Review of SCADA, CMS and Digital Twin Integration. *Energies*. [doi:10.3390/en19051370](https://doi.org/10.3390/en19051370)
 
-## Publications Using the Datasets:
-Scientific publications using the datasets of Table 1, grouped by dataset and numbered consecutively after the [Reviews](#reviews-on-open-wind-scada-data-sets). ⭐ marks the publication introducing the dataset. Publications using several datasets keep their number and link to their first entry. Collected via citation and full-text searches (OpenAlex, DataCite, publisher pages); not exhaustive - additions welcome via PR.
+<a id="publications"></a>
+### 3.2 Publications Using the Datasets
+Scientific publications using the datasets in the [dataset overview](#datasets), grouped by dataset and numbered consecutively after the [Reviews](#reviews). ⭐ marks the publication introducing the dataset. Publications using several datasets keep their number and link to their first entry. Collected via citation and full-text searches (OpenAlex, DataCite, publisher pages); not exhaustive - additions welcome via PR.
 
-### <a id="pubs-1"></a>1 - EDP Open Data (15)
+<details><summary><a id="pubs-1"></a><b>1 - EDP Open Data (15)</b></summary>
+
 - <a id="ref7"></a>[7] Roelofs et al. (2021). Autoencoder-based anomaly root cause analysis for wind turbines. *Energy and AI*. [doi:10.1016/j.egyai.2021.100065](https://doi.org/10.1016/j.egyai.2021.100065)
 - <a id="ref8"></a>[8] Barber et al. (2022). Enabling Co-Innovation for a Successful Digital Transformation in Wind Energy Using a New Digital Ecosystem and a Fault Detection Case Study. *Energies*. [doi:10.3390/en15155638](https://doi.org/10.3390/en15155638)
 - <a id="ref9"></a>[9] Garan et al. (2022). A Data-Centric Machine Learning Methodology: Application on Predictive Maintenance of Wind Turbines. *Energies*. [doi:10.3390/en15030826](https://doi.org/10.3390/en15030826)
@@ -116,11 +141,17 @@ Scientific publications using the datasets of Table 1, grouped by dataset and nu
 - <a id="ref19"></a>[19] Lu et al. (2026). Towards predictive maintenance: an early warning system for wind turbine generators based on a hybrid deep learning model and dynamic thresholding. *Engineering Research Express*. [doi:10.1088/2631-8695/aeb8e8](https://doi.org/10.1088/2631-8695/aeb8e8)
 - <a id="ref20"></a>[20] Nogueira et al. (2026). Anomaly Detection in Wind Turbines: Persistence-Based Alarm Confirmation for False-Alarm Mitigation and Detection-Latency Trade-Offs. *Sensors*. [doi:10.3390/s26123896](https://doi.org/10.3390/s26123896)
 
-### <a id="pubs-2"></a>2 - Winji Gearbox Challenge (2)
+</details>
+
+<details><summary><a id="pubs-2"></a><b>2 - Winji Gearbox Challenge (2)</b></summary>
+
 - <a id="ref21"></a>[21] ⭐ Barber et al. (2023). Best Practice Data Sharing Guidelines for Wind Turbine Fault Detection Model Evaluation. *Energies*. [doi:10.3390/en16083567](https://doi.org/10.3390/en16083567)
 - <a id="ref22"></a>[22] Barber et al. (2023). Can data sharing really provide added value? Practical data sharing recommendations for the wind energy sector. *Journal of Physics: Conference Series*. [doi:10.1088/1742-6596/2507/1/012003](https://doi.org/10.1088/1742-6596/2507/1/012003)
 
-### <a id="pubs-3"></a>3 - Kelmarsh (16)
+</details>
+
+<details><summary><a id="pubs-3"></a><b>3 - Kelmarsh (16)</b></summary>
+
 - <a id="ref23"></a>[23] Im et al. (2023). Comparison and Enhancement of Machine Learning Algorithms for Wind Turbine Output Prediction with Insufficient Data. *Energies*. [doi:10.3390/en16155810](https://doi.org/10.3390/en16155810)
 - <a id="ref24"></a>[24] Effenberger et al. (2024). Mind the (spectral) gap: how the temporal resolution of wind data affects multi-decadal wind power forecasts. *Environmental Research Letters*. [doi:10.1088/1748-9326/ad0bd6](https://doi.org/10.1088/1748-9326/ad0bd6)
 - <a id="ref25"></a>[25] English & Abolghasemi (2024). Improving the forecast accuracy of wind power by leveraging multiple hierarchical structure. *Sustainable Energy, Grids and Networks*. [doi:10.1016/j.segan.2024.101517](https://doi.org/10.1016/j.segan.2024.101517)
@@ -138,7 +169,10 @@ Scientific publications using the datasets of Table 1, grouped by dataset and nu
 - <a id="ref37"></a>[37] Pandit et al. (2026). SCADA-based early detection of wind turbine yaw motor current failures using Gaussian process surrogate models and Fisher's combined probabilistic alarm thresholding. *Wind Energy and Engineering Research*. [doi:10.1016/j.weer.2026.100031](https://doi.org/10.1016/j.weer.2026.100031)
 - <a id="ref38"></a>[38] Park et al. (2026). Structural defects in the Kelmarsh open SCADA dataset: a provenance audit with file reconstruction and downstream consequences. *Wind Energy Science Discussions*. [doi:10.5194/wes-2026-166](https://doi.org/10.5194/wes-2026-166)
 
-### <a id="pubs-4"></a>4 - Penmanshiel (21)
+</details>
+
+<details><summary><a id="pubs-4"></a><b>4 - Penmanshiel (21)</b></summary>
+
 - <a id="ref39"></a>[39] Jenkel et al. (2023). Privacy-Preserving Fleet-Wide Learning of Wind Turbine Conditions with Federated Learning. *Energies*. [doi:10.3390/en16176377](https://doi.org/10.3390/en16176377)
 - <a id="ref40"></a>[40] Kousounadis-Knousen et al. (2023). A New Co-Optimized Hybrid Model Based on Multi-Objective Optimization for Probabilistic Wind Power Forecasting in a Spatio–Temporal Framework. *IEEE Access*. [doi:10.1109/ACCESS.2023.3302701](https://doi.org/10.1109/ACCESS.2023.3302701)
 - <a id="ref41"></a>[41] Liu et al. (2023). An online transfer learning model for wind turbine power prediction based on spatial feature construction and system-wide update. *Applied Energy*. [doi:10.1016/j.apenergy.2023.121049](https://doi.org/10.1016/j.apenergy.2023.121049)
@@ -161,7 +195,10 @@ Scientific publications using the datasets of Table 1, grouped by dataset and nu
 - <a id="ref51"></a>[51] Neshat et al. (2026). Physics-informed LLM-guided dynamic spatio-temporal graph deep network for short-term wind farm power forecasting. *Energy Conversion and Management*. [doi:10.1016/j.enconman.2026.121974](https://doi.org/10.1016/j.enconman.2026.121974)
 - <a id="ref52"></a>[52] Windmann et al. (2026). Benchmarking Sensor-Fault Robustness in Forecasting. *arXiv*. [doi:10.48550/arXiv.2605.10822](https://doi.org/10.48550/arXiv.2605.10822)
 
-### <a id="pubs-5"></a>5 - Ørsted Anholt Offshore (10)
+</details>
+
+<details><summary><a id="pubs-5"></a><b>5 - Ørsted Anholt Offshore (10)</b></summary>
+
 _Early DTU works obtained the data via a direct DTU–Ørsted collaboration rather than the data-sharing programme._
 
 - <a id="ref53"></a>[53] Ahsbahs et al. (2018). Applications of satellite winds for the offshore wind farm site Anholt. *Wind Energy Science*. [doi:10.5194/wes-3-573-2018](https://doi.org/10.5194/wes-3-573-2018)
@@ -175,7 +212,10 @@ _Early DTU works obtained the data via a direct DTU–Ørsted collaboration rath
 - <a id="ref61"></a>[61] Lejeune et al. (2026). Correlating wake-model performance to the atmospheric state: a SCADA-based analysis at two offshore wind farms. *Wind Energy Science Discussions*. [doi:10.5194/wes-2026-164](https://doi.org/10.5194/wes-2026-164)
 - <a id="ref62"></a>[62] Nordbak et al. (2026). Short-Term Offshore Wind Power Forecasting with TimeGPT: Insights from SCADA and LiDAR Measurements. *Journal of Physics: Conference Series*. [doi:10.1088/1742-6596/3224/3/032121](https://doi.org/10.1088/1742-6596/3224/3/032121)
 
-### <a id="pubs-6"></a>6 - Ørsted Westermost Rough (7)
+</details>
+
+<details><summary><a id="pubs-6"></a><b>6 - Ørsted Westermost Rough (7)</b></summary>
+
 - [[56]](#ref56) Doekemeijer et al. (2022). Comparison of the Gaussian Wind Farm Model with Historical Data of Three Offshore Wind Farms _(see Ørsted Anholt Offshore)_
 - <a id="ref63"></a>[63] Lanzilao & Meyers (2022). A new wake‐merging method for wind‐farm power prediction in the presence of heterogeneous background velocity fields. *Wind Energy*. [doi:10.1002/we.2669](https://doi.org/10.1002/we.2669)
 - <a id="ref64"></a>[64] Aerts et al. (2023). Bayesian uncertainty quantification framework for wake model calibration and validation with historical wind farm power data. *Wind Energy*. [doi:10.1002/we.2841](https://doi.org/10.1002/we.2841)
@@ -184,7 +224,10 @@ _Early DTU works obtained the data via a direct DTU–Ørsted collaboration rath
 - <a id="ref66"></a>[66] Lejeune et al. (2026). Toward an integrated wake model calibration tool fed with SCADA data: correlating wake model performances to the atmospheric state. *Journal of Physics: Conference Series*. [doi:10.1088/1742-6596/3224/3/032008](https://doi.org/10.1088/1742-6596/3224/3/032008)
 - [[61]](#ref61) Lejeune et al. (2026). Correlating wake-model performance to the atmospheric state: a SCADA-based analysis at two offshore wind farms _(see Ørsted Anholt Offshore)_
 
-### <a id="pubs-7a-7b"></a>7a/7b - CARE to Compare (13)
+</details>
+
+<details><summary><a id="pubs-7a-7b"></a><b>7a/7b - CARE to Compare (13)</b></summary>
+
 - <a id="ref67"></a>[67] ⭐ Gück et al. (2024). CARE to Compare: A Real-World Benchmark Dataset for Early Fault Detection in Wind Turbine Data. *Data*. [doi:10.3390/data9120138](https://doi.org/10.3390/data9120138)
 - <a id="ref68"></a>[68] Ciocan et al. (2025). Energy-Aware Anomaly Detection in Wind Turbine SCADA Systems. *2025 International Conference on Software, Telecommunications and Computer Networks (SoftCOM)*. [doi:10.23919/softcom66362.2025.11197377](https://doi.org/10.23919/softcom66362.2025.11197377)
 - <a id="ref69"></a>[69] Hassan et al. (2025). AI-Enabled Predictive Maintenance for Offshore Wind Turbines: An Empirical Study. *2025 International Conference on Future Energy Solutions (FES)*. [doi:10.1109/FES65767.2025.11341781](https://doi.org/10.1109/FES65767.2025.11341781)
@@ -199,13 +242,19 @@ _Early DTU works obtained the data via a direct DTU–Ørsted collaboration rath
 - <a id="ref78"></a>[78] O’Connor et al. (2026). Detecting Changes in Normal Wind Turbine Operations Using Data Driven Approaches. *Journal of Physics: Conference Series*. [doi:10.1088/1742-6596/3224/6/062018](https://doi.org/10.1088/1742-6596/3224/6/062018)
 - <a id="ref79"></a>[79] Yin & Gao (2026). SWIFT: Spectral Wavelet Integrated Fault Transformer for Wind Turbine Anomaly Detection. *IEEE Access*. [doi:10.1109/ACCESS.2026.3715102](https://doi.org/10.1109/ACCESS.2026.3715102)
 
-### <a id="pubs-8"></a>8 - Fuhrländer Farm (4)
+</details>
+
+<details><summary><a id="pubs-8"></a><b>8 - Fuhrländer Farm (4)</b></summary>
+
 - <a id="ref80"></a>[80] ⭐ Marti-Puig et al. (2024). Wind turbine database for intelligent operation and maintenance strategies. *Scientific Data*. [doi:10.1038/s41597-024-03067-9](https://doi.org/10.1038/s41597-024-03067-9)
 - <a id="ref81"></a>[81] Marti-Puig et al. (2019). Feature Selection Algorithms for Wind Turbine Failure Prediction. *Energies*. [doi:10.3390/en12030453](https://doi.org/10.3390/en12030453)
 - <a id="ref82"></a>[82] Marti-Puig & Núñez-Vilaplana (2024). Dynamic Clustering of Wind Turbines Using SCADA Signal Analysis. *Energies*. [doi:10.3390/en17112514](https://doi.org/10.3390/en17112514)
 - <a id="ref83"></a>[83] Gutierrez et al. (2026). Temporal Attribution Matrix for Tracking XAI Feature Importance Evolution in Wind Turbine Gearbox Degradation Detection Using SCADA Data. *Energies*. [doi:10.3390/en19133072](https://doi.org/10.3390/en19133072)
 
-### <a id="pubs-9a-9d"></a>9a-9d - DSforWind (7)
+</details>
+
+<details><summary><a id="pubs-9a-9d"></a><b>9a-9d - DSforWind (7)</b></summary>
+
 - <a id="ref84"></a>[84] ⭐ Lee et al. (2015). Power Curve Estimation With Multivariate Environmental Factors for Inland and Offshore Wind Farms. *Journal of the American Statistical Association*. [doi:10.1080/01621459.2014.977385](https://doi.org/10.1080/01621459.2014.977385)
 - <a id="ref85"></a>[85] Pang et al. (2021). Correlation analysis of factors affecting wind power based on machine learning and Shapley value. *IET Energy Systems Integration*. [doi:10.1049/esi2.12022](https://doi.org/10.1049/esi2.12022)
 - <a id="ref86"></a>[86] Chen & Zhang (2022). Density Regression with Conditional Support Points. *Technometrics*. [doi:10.1080/00401706.2022.2044384](https://doi.org/10.1080/00401706.2022.2044384)
@@ -214,20 +263,31 @@ _Early DTU works obtained the data via a direct DTU–Ørsted collaboration rath
 - <a id="ref89"></a>[89] Wang et al. (2023). Wind Power Curve Modeling With Large-Scale Generalized Kernel-Based Regression Model. *IEEE Transactions on Sustainable Energy*. [doi:10.1109/TSTE.2023.3276906](https://doi.org/10.1109/TSTE.2023.3276906)
 - <a id="ref90"></a>[90] Aydemir & Öztürk (2026). Power curve estimation and feature importance quantification for offshore wind turbines based on XGBoost regression. *International Journal of Green Energy*. [doi:10.1080/15435075.2026.2628952](https://doi.org/10.1080/15435075.2026.2628952)
 
-### <a id="pubs-10"></a>10 - PCWG Data Sets (1)
+</details>
+
+<details><summary><a id="pubs-10"></a><b>10 - PCWG Data Sets (1)</b></summary>
+
 _Based on the confidential PCWG Share-3 exercise; no independent use of the public datasets found._
 
 - <a id="ref91"></a>[91] Lee et al. (2020). The Power Curve Working Group's assessment of wind turbine power performance prediction methods. *Wind Energy Science*. [doi:10.5194/wes-5-199-2020](https://doi.org/10.5194/wes-5-199-2020)
 
-### <a id="pubs-11a"></a>11a - Norrekaer Windfarm (2)
+</details>
+
+<details><summary><a id="pubs-11a"></a><b>11a - Norrekaer Windfarm (2)</b></summary>
+
 - <a id="ref92"></a>[92] Piao et al. (2026). Fourier Geometric Wind Power Forecasting with Numerical Weather Prediction. *Proceedings of the 32nd ACM SIGKDD Conference on Knowledge Discovery and Data Mining V.2*. [doi:10.1145/3770855.3818905](https://doi.org/10.1145/3770855.3818905)
 - <a id="ref93"></a>[93] Saeed (2026). WakePGA: Dynamic Physics-Guided Attention for Wind Farm SCADA Reconstruction Under Changing Wind Directions. *SSRN preprint*. [doi:10.2139/ssrn.7021432](https://doi.org/10.2139/ssrn.7021432)
 
-### <a id="pubs-11b"></a>11b - Delabole Windfarm (0)
+</details>
+
+<details><summary><a id="pubs-11b"></a><b>11b - Delabole Windfarm (0)</b></summary>
+
 _No publications found._
 
+</details>
 
-### <a id="pubs-12"></a>12 - Dundalk IoT (11)
+<details><summary><a id="pubs-12"></a><b>12 - Dundalk IoT (11)</b></summary>
+
 - <a id="ref94"></a>[94] ⭐ Byrne & MacArtain (2023). Multi-annual time series operational data for a Vestas V52 wind turbine located in a coastal peri-urban environment in Ireland. *Data in Brief*. [doi:10.1016/j.dib.2023.109227](https://doi.org/10.1016/j.dib.2023.109227)
 - <a id="ref95"></a>[95] Astolfi et al. (2020). Analysis of Wind Turbine Aging through Operation Curves. *Energies*. [doi:10.3390/en13215623](https://doi.org/10.3390/en13215623)
 - <a id="ref96"></a>[96] Byrne et al. (2020). A Study of Wind Turbine Performance Decline with Age through Operation Data Analysis. *Energies*. [doi:10.3390/en13082086](https://doi.org/10.3390/en13082086)
@@ -240,7 +300,10 @@ _No publications found._
 - <a id="ref103"></a>[103] Sakib et al. (2026). C-MixNet: Regime-aware clustering and MDN-augmented LUBE for uncertainty-aware wind power forecasting. *Energy Reports*. [doi:10.1016/j.egyr.2026.109806](https://doi.org/10.1016/j.egyr.2026.109806)
 - <a id="ref104"></a>[104] Sifakis et al. (2026). Operational Digital Shadow for Onshore Wind Energy Systems. *Energies*. [doi:10.3390/en19122897](https://doi.org/10.3390/en19122897)
 
-### <a id="pubs-13"></a>13 - Kaggle Wind Turbine (8)
+</details>
+
+<details><summary><a id="pubs-13"></a><b>13 - Kaggle Wind Turbine (8)</b></summary>
+
 _Very widely used (~80+ papers); representative selection._
 
 - <a id="ref105"></a>[105] Delgado & Fahim (2020). Wind Turbine Data Analysis and LSTM-Based Prediction in SCADA System. *Energies*. [doi:10.3390/en14010125](https://doi.org/10.3390/en14010125)
@@ -252,15 +315,24 @@ _Very widely used (~80+ papers); representative selection._
 - <a id="ref111"></a>[111] Tarek et al. (2023). Wind Power Prediction Based on Machine Learning and Deep Learning Models. *Computers, Materials & Continua*. [doi:10.32604/cmc.2023.032533](https://doi.org/10.32604/cmc.2023.032533)
 - <a id="ref112"></a>[112] Oyucu & Aksöz (2024). Integrating Machine Learning and MLOps for Wind Energy Forecasting: A Comparative Analysis and Optimization Study on Türkiye’s Wind Data. *Applied Sciences*. [doi:10.3390/app14093725](https://doi.org/10.3390/app14093725)
 
-### <a id="pubs-14"></a>14 - Small São Paulo (3)
+</details>
+
+<details><summary><a id="pubs-14"></a><b>14 - Small São Paulo (3)</b></summary>
+
 - <a id="ref113"></a>[113] ⭐ Bassi et al. (2023). Dataset on SCADA Data of an Urban Small Wind Turbine Operation in São Paulo, Brazil. *Data*. [doi:10.3390/data8030052](https://doi.org/10.3390/data8030052)
 - <a id="ref114"></a>[114] Bassi et al. (2022). Implantation, Operation Data and Performance Assessment of An Urban Area Grid-Connected Small Wind Turbine. *Wind*. [doi:10.3390/wind2040037](https://doi.org/10.3390/wind2040037)
 - <a id="ref115"></a>[115] Pawlik (2026). Evaluating Reconstruction-Based and Proximity-Based Methods: A Four-Way Comparison (AE, LSTM-AE, OCSVM, IF) in SCADA Anomaly Detection Under Inverted Imbalance. *Future Internet*. [doi:10.3390/fi18020096](https://doi.org/10.3390/fi18020096)
 
-### <a id="pubs-15"></a>15 - Björkö Wind Turbine (1)
+</details>
+
+<details><summary><a id="pubs-15"></a><b>15 - Björkö Wind Turbine (1)</b></summary>
+
 - <a id="ref116"></a>[116] Panda et al. (2026). Rotor effective wind field estimation and multi-body dynamic characterization of a 45 kW horizontal axis wind turbine. *Renewable Energy*. [doi:10.1016/j.renene.2025.124343](https://doi.org/10.1016/j.renene.2025.124343)
 
-### <a id="pubs-16"></a>16 - IET-OST Turbine (4)
+</details>
+
+<details><summary><a id="pubs-16"></a><b>16 - IET-OST Turbine (4)</b></summary>
+
 _The last three use the earlier ETH Zürich release of the same turbine ([Zenodo 4964458](https://doi.org/10.5281/zenodo.4964458))._
 
 - <a id="ref117"></a>[117] Hermes et al. (2025). Uncertainty propagation and subspace identification of isotropic wind turbines with the PO-MOESP algorithm. *Mechanical Systems and Signal Processing*. [doi:10.1016/j.ymssp.2025.113159](https://doi.org/10.1016/j.ymssp.2025.113159)
@@ -268,14 +340,20 @@ _The last three use the earlier ETH Zürich release of the same turbine ([Zenodo
 - <a id="ref119"></a>[119] Alqahtani et al. (2026). Enhancing SCADA Security in Critical Infrastructure: A Multi-Layered Architecture Using IoT-Based Monitoring and AI-Driven Anomaly Detection. *International Journal of Advanced Computer Science and Applications*. [doi:10.14569/ijacsa.2026.0170187](https://doi.org/10.14569/ijacsa.2026.0170187)
 - <a id="ref120"></a>[120] Velandia-Cárdenas et al. (2026). Enhancing Wind Turbine Diagnostics With SCADA‐Vibration Fusion, Contrastive Learning, and Linear Predictive Coefficients. *Structural Control and Health Monitoring*. [doi:10.1155/stc/4023580](https://doi.org/10.1155/stc/4023580)
 
-### <a id="pubs-17-18"></a>17/18 - Pedra do Sal & Beberibe (5)
+</details>
+
+<details><summary><a id="pubs-17-18"></a><b>17/18 - Pedra do Sal & Beberibe (5)</b></summary>
+
 - <a id="ref121"></a>[121] ⭐ Sakagami et al. (2015). Wind Shear Assessment Using Wind LiDAR Profiler and Sonic 3D Anemometer for Wind Energy Applications—Preliminary Results. *Renewable Energy in the Service of Mankind Vol I*. [doi:10.1007/978-3-319-17777-9_80](https://doi.org/10.1007/978-3-319-17777-9_80)
 - <a id="ref122"></a>[122] Sakagami et al. (2014). Logarithmic Wind Profile: A Stability Wind Shear Term. *arXiv*. [doi:10.48550/arXiv.1405.5158](https://doi.org/10.48550/arXiv.1405.5158)
 - <a id="ref123"></a>[123] Barber (2020). Application of a new machine learning method for site-dependent power curve prediction to field measurement data. *Zenodo*. [doi:10.5281/zenodo.4094618](https://doi.org/10.5281/zenodo.4094618)
 - <a id="ref124"></a>[124] Sakagami et al. (2023). Power curve performance of coastal turbines subject to low turbulence intensity offshore winds. *Journal of the Brazilian Society of Mechanical Sciences and Engineering*. [doi:10.1007/s40430-022-03942-9](https://doi.org/10.1007/s40430-022-03942-9)
 - [[35]](#ref35) Xu et al. (2025). A cross-dataset benchmark for neural network-based wind power forecasting _(see Kelmarsh)_
 
-### <a id="pubs-19"></a>19 - SMARTEOLE Wind Farm (5)
+</details>
+
+<details><summary><a id="pubs-19"></a><b>19 - SMARTEOLE Wind Farm (5)</b></summary>
+
 _Göçmen 2022, Duc 2019 and Hegazy 2022 use data from earlier campaigns at the same farm._
 
 - <a id="ref125"></a>[125] ⭐ Simley et al. (2021). Results from a wake-steering experiment at a commercial wind plant: investigating the wind speed dependence of wake-steering performance. *Wind Energy Science*. [doi:10.5194/wes-6-1427-2021](https://doi.org/10.5194/wes-6-1427-2021)
@@ -284,18 +362,26 @@ _Göçmen 2022, Duc 2019 and Hegazy 2022 use data from earlier campaigns at the 
 - <a id="ref128"></a>[128] Hegazy et al. (2022). LiDAR and SCADA data processing for interacting wind turbine wakes with comparison to analytical wake models. *Renewable Energy*. [doi:10.1016/j.renene.2021.09.019](https://doi.org/10.1016/j.renene.2021.09.019)
 - <a id="ref129"></a>[129] Post et al. (2024). Measuring wake deflection from SCADA data during wake steering using machine learning. *Journal of Physics: Conference Series*. [doi:10.1088/1742-6596/2767/4/042031](https://doi.org/10.1088/1742-6596/2767/4/042031)
 
-### <a id="pubs-20"></a>20 - Loegtved VestasV100 (0)
+</details>
+
+<details><summary><a id="pubs-20"></a><b>20 - Loegtved VestasV100 (0)</b></summary>
+
 _No publications found (Kaggle notebooks only)._
 
+</details>
 
-### <a id="pubs-21"></a>21 - Hill of Towie (5)
+<details><summary><a id="pubs-21"></a><b>21 - Hill of Towie (5)</b></summary>
+
 - <a id="ref130"></a>[130] Rashidi et al. (2025). A Multi-Phase Deep Learning Framework for Multi-Step Short-Term Wind Power Forecasting in Presence of Uncertainties. *IEEE Access*. [doi:10.1109/access.2025.3631586](https://doi.org/10.1109/access.2025.3631586)
 - <a id="ref131"></a>[131] Chopard et al. (2026). Combination of turbine-specific and neighbor-based power prediction for accurate and robust under-performance diagnosis. *Journal of Physics: Conference Series*. [doi:10.1088/1742-6596/3224/6/062065](https://doi.org/10.1088/1742-6596/3224/6/062065)
 - <a id="ref132"></a>[132] Si et al. (2026). A dynamic multi-graph spatio-temporal framework for probabilistic wind power and ramp event forecasting. *Sustainable Energy Technologies and Assessments*. [doi:10.1016/j.seta.2026.105477](https://doi.org/10.1016/j.seta.2026.105477)
 - <a id="ref133"></a>[133] Wang & Vidal (2026). Neighbor-Based Estimation of Wind Turbine Power for Upgrade Performance Assessment. *Journal of Physics: Conference Series*. [doi:10.1088/1742-6596/3224/6/062024](https://doi.org/10.1088/1742-6596/3224/6/062024)
 - <a id="ref134"></a>[134] Wang & Vidal (2026). A Probabilistic Baseline Learning Framework for SCADA-Based Wind Turbine Aging Diagnosis and Multi-Scale Performance Degradation Analysis. *PHM Society European Conference*. [doi:10.36001/phme.2026.v9i1.4851](https://doi.org/10.36001/phme.2026.v9i1.4851)
 
-### <a id="pubs-22"></a>22 - Baltic Coast Siemens 2MW (5)
+</details>
+
+<details><summary><a id="pubs-22"></a><b>22 - Baltic Coast Siemens 2MW (5)</b></summary>
+
 _All by the dataset's author group (listed as related works on the Mendeley record)._
 
 - <a id="ref135"></a>[135] ⭐ Dao et al. (2024). Anomaly detection of wind turbines based on stationarity analysis of SCADA data. *Renewable Energy*. [doi:10.1016/j.renene.2024.121076](https://doi.org/10.1016/j.renene.2024.121076)
@@ -304,7 +390,10 @@ _All by the dataset's author group (listed as related works on the Mendeley reco
 - <a id="ref138"></a>[138] Dao (2021). A CUSUM-Based Approach for Condition Monitoring and Fault Diagnosis of Wind Turbines. *Energies*. [doi:10.3390/en14113236](https://doi.org/10.3390/en14113236)
 - <a id="ref139"></a>[139] Dao (2022). Condition monitoring and fault diagnosis of wind turbines based on structural break detection in SCADA data. *Renewable Energy*. [doi:10.1016/j.renene.2021.12.051](https://doi.org/10.1016/j.renene.2021.12.051)
 
-### <a id="pubs-23"></a>23 - SDWPF (10)
+</details>
+
+<details><summary><a id="pubs-23"></a><b>23 - SDWPF (10)</b></summary>
+
 _Very widely used; representative selection._
 
 - <a id="ref140"></a>[140] ⭐ Zhou et al. (2024). SDWPF: A Dataset for Spatial Dynamic Wind Power Forecasting over a Large Turbine Array. *Scientific Data*. [doi:10.1038/s41597-024-03427-5](https://doi.org/10.1038/s41597-024-03427-5)
@@ -318,7 +407,10 @@ _Very widely used; representative selection._
 - <a id="ref148"></a>[148] Hou et al. (2025). Spatiotemporal forecasting using multi-graph neural network assisted dual domain transformer for wind power. *Energy Conversion and Management*. [doi:10.1016/j.enconman.2024.119393](https://doi.org/10.1016/j.enconman.2024.119393)
 - [[35]](#ref35) Xu et al. (2025). A cross-dataset benchmark for neural network-based wind power forecasting _(see Kelmarsh)_
 
-### <a id="pubs-24"></a>24 - Sotavento (7)
+</details>
+
+<details><summary><a id="pubs-24"></a><b>24 - Sotavento (7)</b></summary>
+
 - <a id="ref149"></a>[149] Safari et al. (2018). Novel Multi-Step Short-Term Wind Power Prediction Framework Based on Chaotic Time Series Analysis and Singular Spectrum Analysis. *IEEE Transactions on Power Systems*. [doi:10.1109/TPWRS.2017.2694705](https://doi.org/10.1109/TPWRS.2017.2694705)
 - <a id="ref150"></a>[150] Wang et al. (2018). Deep belief network based k-means cluster approach for short-term wind power forecasting. *Energy*. [doi:10.1016/j.energy.2018.09.118](https://doi.org/10.1016/j.energy.2018.09.118)
 - <a id="ref151"></a>[151] Abedinia et al. (2020). Improved EMD-Based Complex Prediction Model for Wind Power Forecasting. *IEEE Transactions on Sustainable Energy*. [doi:10.1109/TSTE.2020.2976038](https://doi.org/10.1109/TSTE.2020.2976038)
@@ -327,10 +419,16 @@ _Very widely used; representative selection._
 - <a id="ref154"></a>[154] Zhang et al. (2024). Wind power forecasting system with data enhancement and algorithm improvement. *Renewable and Sustainable Energy Reviews*. [doi:10.1016/j.rser.2024.114349](https://doi.org/10.1016/j.rser.2024.114349)
 - <a id="ref155"></a>[155] Jin et al. (2025). Wind power forecasting for newly built wind farms based on deep learning with dual-stage attention mechanism and adaptive transfer learning. *Energy*. [doi:10.1016/j.energy.2025.138275](https://doi.org/10.1016/j.energy.2025.138275)
 
-### <a id="pubs-25a"></a>25a - NREL Flatirons GE 1.5MW SLE (1)
+</details>
+
+<details><summary><a id="pubs-25a"></a><b>25a - NREL Flatirons GE 1.5MW SLE (1)</b></summary>
+
 - <a id="ref156"></a>[156] ⭐ Hamilton et al. (2021). Aeroacoustic Assessment of Wind Plant Controls. *NREL Technical Report*. [doi:10.2172/1785330](https://doi.org/10.2172/1785330)
 
-### <a id="pubs-25b"></a>25b - NREL SUMR-D / CART2 (7)
+</details>
+
+<details><summary><a id="pubs-25b"></a><b>25b - NREL SUMR-D / CART2 (7)</b></summary>
+
 _Mostly by the SUMR project team. Dataset DOI: [10.21947/1888562](https://doi.org/10.21947/1888562)._
 
 - <a id="ref157"></a>[157] Bay et al. (2019). Design and Testing of a Scaled Demonstrator Turbine at the National Wind Technology Center. *AIAA Scitech 2019 Forum*. [doi:10.2514/6.2019-1068](https://doi.org/10.2514/6.2019-1068)
@@ -341,7 +439,10 @@ _Mostly by the SUMR project team. Dataset DOI: [10.21947/1888562](https://doi.or
 - <a id="ref162"></a>[162] Kaminski et al. (2023). Parked aeroelastic field rotor response for a 20% scaled demonstrator of a 13‐MW downwind turbine. *Wind Energy*. [doi:10.1002/we.2794](https://doi.org/10.1002/we.2794)
 - <a id="ref163"></a>[163] Kaminski et al. (2023). Gravo-aeroelastically-scaled demonstrator field tests to represent blade response of a flexible extreme-scale downwind turbine. *Renewable Energy*. [doi:10.1016/j.renene.2023.119217](https://doi.org/10.1016/j.renene.2023.119217)
 
-### <a id="pubs-98"></a>98 - Engie La Haute Borne (7)
+</details>
+
+<details><summary><a id="pubs-98"></a><b>98 - Engie La Haute Borne (7)</b></summary>
+
 - <a id="ref164"></a>[164] Li et al. (2020). Short-term wind power forecasting based on support vector machine with improved dragonfly algorithm. *Journal of Cleaner Production*. [doi:10.1016/j.jclepro.2019.118447](https://doi.org/10.1016/j.jclepro.2019.118447)
 - <a id="ref165"></a>[165] Li et al. (2021). Using enhanced crow search algorithm optimization-extreme learning machine model to forecast short-term wind power. *Expert Systems with Applications*. [doi:10.1016/j.eswa.2021.115579](https://doi.org/10.1016/j.eswa.2021.115579)
 - <a id="ref166"></a>[166] Perr-Sauer et al. (2021). OpenOA: An Open-Source Codebase For Operational Analysis of Wind Farms. *Journal of Open Source Software*. [doi:10.21105/joss.02171](https://doi.org/10.21105/joss.02171)
@@ -350,7 +451,10 @@ _Mostly by the SUMR project team. Dataset DOI: [10.21947/1888562](https://doi.or
 - <a id="ref169"></a>[169] Liu et al. (2024). A novel deep learning-based evolutionary model with potential attention and memory decay-enhancement strategy for short-term wind power point-interval forecasting. *Applied Energy*. [doi:10.1016/j.apenergy.2024.122785](https://doi.org/10.1016/j.apenergy.2024.122785)
 - <a id="ref170"></a>[170] Gijón et al. (2026). Prediction of wind turbines power with physics-informed neural networks and evidential uncertainty quantification. *Engineering Applications of Artificial Intelligence*. [doi:10.1016/j.engappai.2025.113331](https://doi.org/10.1016/j.engappai.2025.113331)
 
-### <a id="pubs-99"></a>99 - Levenmouth Turbine (10)
+</details>
+
+<details><summary><a id="pubs-99"></a><b>99 - Levenmouth Turbine (10)</b></summary>
+
 - <a id="ref171"></a>[171] Chatterjee & Dethlefs (2020). Temporal Causal Inference in Wind Turbine SCADA Data Using Deep Learning for Explainable AI. *Journal of Physics: Conference Series*. [doi:10.1088/1742-6596/1618/2/022022](https://doi.org/10.1088/1742-6596/1618/2/022022)
 - <a id="ref172"></a>[172] Chatterjee & Dethlefs (2020). A Dual Transformer Model for Intelligent Decision Support for Maintenance of Wind Turbines. *2020 International Joint Conference on Neural Networks (IJCNN)*. [doi:10.1109/IJCNN48605.2020.9206839](https://doi.org/10.1109/IJCNN48605.2020.9206839)
 - <a id="ref173"></a>[173] Lin & Liu (2020). Wind power forecasting of an offshore wind turbine based on high-frequency SCADA data and deep learning neural network. *Energy*. [doi:10.1016/j.energy.2020.117693](https://doi.org/10.1016/j.energy.2020.117693)
@@ -362,7 +466,10 @@ _Mostly by the SUMR project team. Dataset DOI: [10.21947/1888562](https://doi.or
 - <a id="ref179"></a>[179] Zhang et al. (2022). Short-term offshore wind power forecasting - A hybrid model based on Discrete Wavelet Transform (DWT), Seasonal Autoregressive Integrated Moving Average (SARIMA), and deep-learning-based Long Short-Term Memory (LSTM). *Renewable Energy*. [doi:10.1016/j.renene.2021.12.100](https://doi.org/10.1016/j.renene.2021.12.100)
 - <a id="ref180"></a>[180] Rutyna (2025). Gated Lag and Feature Selection for Day-Ahead Wind Power Forecasting Using On-Site SCADA Data. *Wind*. [doi:10.3390/wind5040028](https://doi.org/10.3390/wind5040028)
 
-## Other Resources:
+</details>
+
+<a id="resources"></a>
+### 3.3 Other Resources
 **Data portals & platforms**
 - [IEA Task 43](https://iea-wind.org/task43/task-43-open-data/) - IEA Wind task on digitalization & open data
 - [DOE Wind Data Hub](https://wdh.energy.gov) - US DOE wind data repository (e.g. NREL SUMR-D, Flatirons)
@@ -376,5 +483,6 @@ _Mostly by the SUMR project team. Dataset DOI: [10.21947/1888562](https://doi.or
 - [RES wind-up](https://github.com/resgroup/wind-up) - uplift analysis for turbine upgrades (used for Hill of Towie)
 - [Fraunhofer IEE EnergyFaultDetector](https://github.com/AEFDI/EnergyFaultDetector) - framework for early fault detection in energy assets
 
-## Usage
+<a id="star-history"></a>
+## Star History
 [![Star History Chart](https://api.star-history.com/svg?repos=sltzgs/OpenWindSCADA&type=Date)](https://star-history.com/#sltzgs/OpenWindSCADA&Date)
