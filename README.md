@@ -22,8 +22,6 @@ Questions or feedback? Reach out to simon.leszek@tu-berlin.de or open an issue.
 <a id="datasets"></a>
 ## 1. Dataset Overview
 
-**Legend:** ✅ yes · ❌ no · ? unknown · ⭐ comprehensive dataset · 🆕 latest addition · ⚠️ caveat, see notes · 👎 no longer freely available · **bold** = best in class · **Ref:** [n] = publication introducing the dataset, 📚n = number of listed publications using the dataset (see [Publications](#publications)) · 📓 notebook in this repo · ↗️ external loader · on/off/near = onshore/offshore/nearshore · **License:** CC = Creative Commons v4.0 · – or ? = not stated publicly
-
 | ID | Dataset | Loader | Location | Met-mast/<br>LiDAR | #<img src="images/wind_turbine.svg" height="16" alt="turbines" title="Number of turbines"> | Vars | Logs | Labels | ΔT | ΣT | Access | License | Ref | Notes |
 |----|---------|:------:|----------|:------------------:|---------:|:----:|:----:|:------:|----|:---:|--------|---------|-----|-------|
 | 1 | [EDP Open Data](https://www.edp.com/en/innovation/open-data/data) ⚠️ | [📓](notebooks/edp_open_data.ipynb) | 🇪🇸 on | ✅ | 5 | ~80 | ✅ | ✅ | 10m | 2y | mirror | [CC BY](https://creativecommons.org/licenses/by/4.0/) | [📚15](#pubs-1) | <details><summary>notes</summary>Labels: Manual annotations of major failures or component replacements. Original source unavailable; T09 removed from dataset. Re-hosted [mirror](https://data.mendeley.com/datasets/zjxjnjp3xs/1): 8 xlsx files, T01/T06/T07/T11; SCADA ~417k × 83, met-mast ~87.5k × 41, logs ~256k rows; T09 also absent. The mirror is published under CC BY 4.0; the original EDP release was [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) - check licensing of the 3rd-party re-upload.</details> |
@@ -60,6 +58,19 @@ Questions or feedback? Reach out to simon.leszek@tu-berlin.de or open an issue.
 | 26 | [Princess Amalia Offshore Wind Farm](https://offshorewind-measurements.tno.nl/en/measurement-locations/princess-amalia-offshore-wind-farm/) 🆕 | – | 🇳🇱 off | ❌ | 60 | 12 | ✅ | ❌ | 10m | 10y | registration | [CC BY](https://creativecommons.org/licenses/by/4.0/) | – | <details><summary>notes</summary>60 × Vestas V80-2.0 MW (120 MW, monopiles), 01/2008-12/2017; published by Eneco via TNO. Vars: wind speed & direction, power, operating state, pitch, rotor & generator speed, nacelle direction, ambient/nacelle/spinner temperature; min/max/std for pitch, speeds, power & wind speed. Logs: first alarm code per 10m interval. Wave height (1m) from substation radar since 09/2011; no met mast. 29 CSV files (one per variable, ~3.8 GB); turbine signal availability 95.8%. ⚠️ Controller update on 2015-10-08 changes cut-in, power & thrust behaviour; cable failures 2010-07-16 (G041 until 2011-06-01), 2010-11-28 - 2011-05-12 (G031, G039, G040, G048, G049, G056) and 2016-06-23 - 2016-07-23 (G014-G016). Free download after registration. [Dataset DOI](https://doi.org/10.82135/tno-1036183).</details> |
 | 98 | [Engie La Haute Borne](https://opendata-renewables.engie.com/) ⚠️ | – | [🇫🇷 on](https://www.google.com/maps?q=48.449583,5.586111) | ❌ | 4 | 34 | ❌ | ❌ | 10m | 8y | mirror | [CC BY](https://creativecommons.org/licenses/by/4.0/) | [📚7](#pubs-98) | <details><summary>notes</summary>Vars: 34 process parameters, each with avg/std/max/min per interval (~136 columns). Original portal offline. Re-hosted [mirror](https://data.mendeley.com/datasets/vmyg4yp3s8/1): 4 × Senvion MM82, 2013-01-01 - 2020-12-31, 1,057,868 records, CC BY 4.0. Its title misspells the farm as "La Houte Bourne" and locates it in Villeneuve-d'Ascq - the farm is at Vaudeville-le-Haut, Meuse. Check licensing of the 3rd-party re-upload. [Farm info](https://www.thewindpower.net/windfarm_en_3354_la-haute-borne-vaudeville-le-haut.php).</details> |
 | 99 | [Levenmouth Turbine](https://pod.ore.catapult.org.uk/data-collection/ldt-turbine-scada-10m) 👎 | – | 🇬🇧 near | ✅ | 1 | >500 | ✅ | ❌ | 10m/1s | 3y | paid | – | [📚10](#pubs-99) | <details><summary>notes</summary>Not available for free (~2000 £).</details> |
+
+**Legend**
+
+| Symbol | Meaning | Column | Meaning |
+|:------:|---------|--------|---------|
+| ✅ / ❌ | yes / no | Loader | 📓 notebook in this repo · ↗️ external loader |
+| ? / – | unknown / not stated publicly | Location | on / off / near = onshore / offshore / nearshore |
+| **bold** | best in class | <img src="images/wind_turbine.svg" height="16" alt="turbines"> | number of turbines |
+| ⭐ | comprehensive dataset | Vars | number of variables |
+| 🆕 | latest addition | Logs / Labels | event or alarm logs / fault or failure annotations |
+| ⚠️ | caveat, see notes | ΔT / ΣT | temporal resolution / total period covered |
+| 👎 | no longer freely available | Ref | [n] publication introducing the dataset · 📚n publications using it (see [Publications](#publications)) |
+| | | License | CC = Creative Commons v4.0 |
 
 <a id="code"></a>
 ## 2. Code & Community Annotations
