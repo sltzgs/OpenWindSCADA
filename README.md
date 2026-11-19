@@ -4,6 +4,8 @@
 
 Finding usable SCADA data is often the first hurdle in wind energy research. This repository collects 33 dataset entries (onshore & offshore, single turbines to 100+ turbine farms, 1 s to 10 min resolution) in one place, so you can quickly see what exists, how to access it and under which license — and learn from what others have already found in the data.
 
+A [literature review](#literature) complements the catalogue. It covers 6 survey papers on open wind data and 174 publications that use the listed datasets, grouped by dataset, with the paper introducing each dataset marked. This makes it easy to find benchmarks and related work, and to see what a dataset has already been used for.
+
 **Contents**
 1. [Dataset Overview](#datasets) — one table comparing all datasets: location, turbines, variables, logs, labels, resolution, duration, access & license
 2. [Code & Community Annotations](#code)
