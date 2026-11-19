@@ -6,3 +6,6 @@ Poster_OpenWindSCADA*.svg
 # Local data and Claude Code settings
 edp_data/
 .claude/
+
+# Local, non-public files (e.g. author contact list)
+local/

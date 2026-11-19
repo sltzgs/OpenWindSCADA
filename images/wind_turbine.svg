@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="#8a8f98">
+  <title>Wind turbine</title>
+  <path d="M11.4 23h1.2l-.25-13.2h-.7z"/>
+  <path d="M8.5 23h7v-.9h-7z"/>
+  <path d="M11.55 8.6 11.7 1.2c0-.5.6-.5.6 0l.15 7.4z"/>
+  <path d="M12.45 9.15l6.4 3.6c.45.25.15.8-.3.6l-6.5-3.3z"/>
+  <path d="M11.55 9.15l-6.4 3.6c-.45.25-.15.8.3.6l6.5-3.3z"/>
+  <circle cx="12" cy="9" r="1.05"/>
+</svg>
